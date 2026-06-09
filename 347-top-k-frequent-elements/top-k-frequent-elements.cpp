@@ -6,17 +6,18 @@ public:
         for(int i=0;i<n;i++){
             mpp[arr[i]]++;
         }
-        vector<pair<int,int>>v;
-        for(auto it:mpp){
-            v.push_back({it.second,it.first});
-        }
-        sort(v.begin(),v.end());
-        reverse(v.begin(),v.end());
-
-        vector <int>ans;
-for(int i=0;i<k;i++){
-    ans.push_back(v[i].second);
+        priority_queue<pair<int,int>, vector<pair<int,int>>,greater<pair<int,int>>>pq;
+for(auto it:mpp){
+pq.push({it.second,it.first});
+if(pq.size()>k){
+    pq.pop();
 }
-        return ans;
-            }
+}
+vector<int>ans;
+for(int i=0;i<k;i++){
+ans.push_back(pq.top().second);
+pq.pop();
+}
+return ans;
+    }
 };
