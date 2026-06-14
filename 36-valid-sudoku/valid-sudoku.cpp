@@ -1,63 +1,29 @@
 class Solution {
 public:
-        bool checkbox(vector<vector<char>>& board,int x,int y){
-unordered_set<int>stt;
-    for(int i=x;i<=x+2;i++){
-        for(int j=y;j<=y+2;j++){
+    bool isValidSudoku(vector<vector<char>>& board) {
+        unordered_set<string>stt;
+
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
             if(board[i][j]=='.'){
                 continue;
-                }
-            else if(stt.find(board[i][j])!=stt.end()){
-                return false;
             }
             else{
-                stt.insert(board[i][j]);
+string row=string(1,board[i][j])+"_row_"+to_string(i);
+string colm=string(1,board[i][j])+"_colm_"+to_string(j);
+string box=string(1,board[i][j])+"_row_"+to_string(i/3)+"_colm_"+to_string(j/3);
+
+if(stt.find(row)!=stt.end() ||stt.find(colm)!=stt.end()||stt.find(box)!=stt.end()){
+return false;
+}
+else{
+    stt.insert(row);
+    stt.insert(colm);
+    stt.insert(box);
+}
             }
         }
     }
     return true;
-}
-    bool isValidSudoku(vector<vector<char>>& board) {
-        //check rows;
-        for(int i=0;i<9;i++){
-        unordered_set<int>mppr;
-            for(int j=0;j<9;j++){
-                if(board[i][j]=='.'){
-                   continue; 
-                }
-                else if(mppr.find(board[i][j])==mppr.end()){
-                    mppr.insert(board[i][j]);
-                }
-                else{
-                    return false;
-                }
-            }
-        }
-                //check cols;
-        for(int i=0;i<9;i++){
-        unordered_set<int>mppr;
-            for(int j=0;j<9;j++){
-                if(board[j][i]=='.'){
-                   continue; 
-                }
-                else if(mppr.find(board[j][i])==mppr.end()){
-                    mppr.insert(board[j][i]);
-                }
-                else{
-                    return false;
-                }
-            }
-        }
-        //check boxx
-        for(int i=0;i<9;i=i+3){
-            for(int j=0;j<9;j=j+3){
-        bool result = checkbox(board,i,j);
-        if (result==false){
-            return false;
-        }
-            }
-        }
-    
-        return true;
-        }
+    }
 };
